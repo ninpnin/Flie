@@ -7,7 +7,7 @@ function initMap() {
         // Styles a map in night mode.
 map = new google.maps.Map(document.getElementById('map'), {
   center: {
-  	lat: 52.516667, lng: 13.38
+  	lat: 52.516667, lng: 6.55
   },
   zoom: 4,
   disableDefaultUI: true,
@@ -89,6 +89,25 @@ map = new google.maps.Map(document.getElementById('map'), {
       featureType: 'water',
       elementType: 'labels.text.stroke',
       stylers: [{color: '#17263c'}]
+    },
+    {
+      featureType: "administrative",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    },{
+      featureType: "poi",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    },{
+      featureType: "road",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
     }
   ]
 	});
