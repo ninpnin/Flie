@@ -11,9 +11,16 @@
 	
 	<body>
 
-		<div id="kirjoitusboksi">L&Auml;HT&Ouml;PAIKKA<br>M&Auml;&Auml;R&Auml;NP&Auml;&Auml;</div>
-    	<div id="map"></div>
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6EdPrsEvVdbgnIGmGzUfGRU7XMPkcg84&callback=initMap"></script>
+		<div id="top">
+			<div id="hakukentta">
+			    <input type="text" id="start" name="firstname" placeholder="L&Auml;HT&Ouml;PAIKKA">
+			    <input type="text" id="end" name="lastname" placeholder="M&Auml;&Auml;R&Auml;NP&Auml;&Auml;">
+			    <input type="submit" value="Etsi">
+			</div>
+
+			<div id="map"></div>
+			<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6EdPrsEvVdbgnIGmGzUfGRU7XMPkcg84&callback=initMap"></script>
+		</div>
 
 	</body>
 

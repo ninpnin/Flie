@@ -1,10 +1,13 @@
-var map;
+var map = null;
+var directionsService = null;
+
 
 
 //window.onLoad = initMap();
 
 function initMap() {
         // Styles a map in night mode.
+        directionsService = new google.maps.DirectionsService;
 map = new google.maps.Map(document.getElementById('map'), {
   center: {
   	lat: 52.516667, lng: 6.55
@@ -113,5 +116,36 @@ map = new google.maps.Map(document.getElementById('map'), {
 	});
 	map.setOptions({draggable: false});
 
+  var myPosition = {lat: 52.516667, lng: 13.38};
+  var marker = new google.maps.Marker({
+          position: myPosition,
+          map: map,
+          title: 'Hello World!'
+  });
 }
 
+function centerMap() {
+  console.log("Center map");
+  if (map != null)
+    map.panTo(new google.maps.LatLng(52.516667, 6.55));
+}
+
+window.addEventListener('resize', function(event){
+  centerMap();
+  // do stuff here
+});
+
+
+function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        directionsService.route({
+          origin: document.getElementById('start').value,
+          destination: document.getElementById('end').value,
+          travelMode: 'DRIVING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
