@@ -1,19 +1,23 @@
 var map = null;
 var directionsService = null;
+var directionsDisplay = null;
 
-
-
-//window.onLoad = initMap();
-
+//Alusta kartta yms
 function initMap() {
-        // Styles a map in night mode.
-        directionsService = new google.maps.DirectionsService;
-map = new google.maps.Map(document.getElementById('map'), {
+
+  //Reittiohjeet
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
+
+  //Itse kartta
+  map = new google.maps.Map(document.getElementById('map'), {
   center: {
   	lat: 52.516667, lng: 6.55
   },
   zoom: 4,
   disableDefaultUI: true,
+
+  //Tyyliseikat; värit yms
   styles: [
     {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
     {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -114,7 +118,13 @@ map = new google.maps.Map(document.getElementById('map'), {
     }
   ]
 	});
+  
+  //Tee kartasta staattinen
 	map.setOptions({draggable: false});
+  map.setOptions({keyboardShortcuts: false});
+  map.setOptions({scrollwheel: false});
+
+  //zmap.disableScrollWheelZoom();
 
   var myPosition = {lat: 52.516667, lng: 13.38};
   var marker = new google.maps.Marker({
@@ -124,18 +134,19 @@ map = new google.maps.Map(document.getElementById('map'), {
   });
 }
 
+//Apufunktio kartan keskittämiseen
 function centerMap() {
   console.log("Center map");
   if (map != null)
     map.panTo(new google.maps.LatLng(52.516667, 6.55));
 }
 
+//Kytke keskittäminen ikkunan koon muuttamiseen
 window.addEventListener('resize', function(event){
   centerMap();
-  // do stuff here
 });
 
-
+//Reitin hakeminen
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         directionsService.route({
           origin: document.getElementById('start').value,
