@@ -17,7 +17,7 @@ function initMap() {
   zoom: 4,
   disableDefaultUI: true,
 
-  //Tyyliseikat; värit yms
+  //Tyyliseikkoja; värit yms
   styles: [
     {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
     {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
