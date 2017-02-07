@@ -7,7 +7,9 @@
 	    <meta charset="utf-8">
 		<script type="text/javascript" src="jquery-3.1.1.js"></script>
 
+		<!-- Paikalliset tiedostot !-->
 		<script type="text/javascript" src="logic.js"></script>
+		<script type="text/javascript" src="mathHelper.js"></script>
 
 
 	</head>
@@ -18,11 +20,11 @@
 			<div id="hakukentta">
 			    <input type="text" id="start" name="firstname" placeholder="L&Auml;HT&Ouml;PAIKKA">
 			    <input type="text" id="end" name="lastname" placeholder="M&Auml;&Auml;R&Auml;NP&Auml;&Auml;">
-			    <input type="submit" value="Etsi">
+			    <input type="submit" value="Etsi" onclick="searchRoute();">
 			</div>
 
 			<div id="map"></div>
-			<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6EdPrsEvVdbgnIGmGzUfGRU7XMPkcg84&callback=initMap&libraries=places"></script>
+			<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6EdPrsEvVdbgnIGmGzUfGRU7XMPkcg84&callback=initMap&libraries=places&libraries=geometry"></script>
 		</div>
 
 	</body>

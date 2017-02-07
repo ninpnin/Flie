@@ -6,6 +6,9 @@ var berlin = null;
 var infowindow;
 var geocoder = null;
 
+var start = null;
+var end = null;
+
 //Alusta kartta yms
 function initMap() {
 
@@ -214,7 +217,7 @@ $(document).keydown(function(e) {
         break;
 
         case 13: // enter
-          searchFrom();
+          searchRoute();
           break;
 
         case 40: // down
@@ -226,31 +229,53 @@ $(document).keydown(function(e) {
     e.preventDefault(); // prevent the default action (scroll / move caret)
 });
 
-function searchFrom() {
-  console.log("MOIKKA. PAINOIT JUURI ENTTERIÄ.");
+function searchRoute() {
+  //console.log("MOIKKA. PAINOIT JUURI ENTTERIÄ.");
   var fromField = document.getElementById("start").value;
   console.log(fromField);
-  //
-  codeAddress(fromField);
+  //Aseta lähtöpaikan sijainti
+  codeAddress(fromField, true);
+  var toField = document.getElementById("end").value;
+  //Aseta määränpään sijainti
+  end = codeAddress(toField, false);
 
 }
 
-function codeAddress(address) 
-{
-  geocoder.geocode( {address:address}, function(results, status) 
-  {
-    if (status == google.maps.GeocoderStatus.OK) 
-    {
-      map.setCenter(results[0].geometry.location);//center the map over the result
+function showDistance() {
+  if (start != null && end != null) {
+    console.log("Search distance...");
+    var currentDistance = google.maps.geometry.spherical.computeDistanceBetween(start, end) / 1000.0;
+    var fuel = currentDistance * 1.9 / 100;
+    var co2 = fuel * 20;
+    alert(Math.floor(10*fuel)/10 + "l bensaa " + Math.floor(currentDistance) + " km");
+    alert("CO2-päästöjä: " + Math.floor(co2) + " grammaa")
+
+  }
+}
+
+function codeAddress(address, isStart) {
+
+  geocoder.geocode( {address:address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
       //place a marker at the location
+      var point = results[0].geometry.location;
       var marker = new google.maps.Marker(
       {
           map: map,
-          position: results[0].geometry.location
+          position: point
       });
-      centerMap();
+      if (isStart)
+        start = point;
+      else 
+        end = point;
+      showDistance();
+
     } else {
       alert("Paikkaa '" + address + "' ei löytynyt.");
+      if (isStart)
+        start = null;
+      else
+        end = null;
    }
   });
 }
