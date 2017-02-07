@@ -132,14 +132,6 @@ function initMap() {
   map.setOptions({scrollwheel: false});
 
   //zmap.disableScrollWheelZoom();
-
-  var myPosition = {lat: 52.516667, lng: 13.38};
-  var marker = new google.maps.Marker({
-          position: myPosition,
-          map: map,
-          title: 'Hello World!'
-  });
-
   initService();
 }
 
