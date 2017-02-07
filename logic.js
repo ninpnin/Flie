@@ -1,6 +1,10 @@
 var map = null;
 var directionsService = null;
 var directionsDisplay = null;
+var berlin = null;
+
+var infowindow;
+var geocoder = null;
 
 //Alusta kartta yms
 function initMap() {
@@ -132,7 +136,46 @@ function initMap() {
           map: map,
           title: 'Hello World!'
   });
+
+  initService();
 }
+
+function initService() {
+/*
+  infowindow = new google.maps.InfoWindow();
+  var service = new google.maps.places.PlacesService(map);
+  service.nearbySearch({
+    location: helsinki,
+    radius: 500,
+    type: ['store']
+  }, callback);
+*/
+  geocoder = new google.maps.Geocoder();
+  console.log("GEOCODER: " + geocoder);
+
+}
+
+function callback(results, status) {
+  if (status === google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarker(results[i]);
+    }
+  }
+}
+
+function createMarker(place) {
+  var placeLoc = place.geometry.location;
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
+  });
+}
+
 
 //Apufunktio kartan keskittämiseen
 function centerMap() {
@@ -160,3 +203,54 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
           }
         });
       }
+
+
+$(document).keydown(function(e) {
+    switch(e.which) {
+        case 37: // left
+        break;
+
+        case 38: // up
+        break;
+
+        case 13: // enter
+          searchFrom();
+          break;
+
+        case 40: // down
+          console.log("MOIKKA. PAINOIT JUURI ALAS-NAPPULAA.");
+          break;
+
+        default: return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+});
+
+function searchFrom() {
+  console.log("MOIKKA. PAINOIT JUURI ENTTERIÄ.");
+  var fromField = document.getElementById("start").value;
+  console.log(fromField);
+  //
+  codeAddress(fromField);
+
+}
+
+function codeAddress(address) 
+{
+  geocoder.geocode( {address:address}, function(results, status) 
+  {
+    if (status == google.maps.GeocoderStatus.OK) 
+    {
+      map.setCenter(results[0].geometry.location);//center the map over the result
+      //place a marker at the location
+      var marker = new google.maps.Marker(
+      {
+          map: map,
+          position: results[0].geometry.location
+      });
+      centerMap();
+    } else {
+      alert("Paikkaa '" + address + "' ei löytynyt.");
+   }
+  });
+}
