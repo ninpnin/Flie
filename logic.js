@@ -246,9 +246,9 @@ function showDistance() {
     console.log("Search distance...");
     var currentDistance = google.maps.geometry.spherical.computeDistanceBetween(start, end) / 1000.0;
     var fuel = currentDistance * 1.9 / 100;
-    var co2 = fuel * 20;
+    var co2 = fuel * 2.2;
     alert(Math.floor(10*fuel)/10 + "l bensaa " + Math.floor(currentDistance) + " km");
-    alert("CO2-päästöjä: " + Math.floor(co2) + " grammaa")
+    alert("CO2-päästöjä: " + Math.floor(10*co2)/10+ " kg ("+ Math.floor(20*co2)/10+ "kg jos edestakainen matka)")
 
   }
 }
