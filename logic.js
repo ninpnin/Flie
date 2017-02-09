@@ -9,13 +9,15 @@ var geocoder = null;
 var start = null;
 var end = null;
 
+var markers = [];
+var line = null;
+
 //Alusta kartta yms
 function initMap() {
 
   //Reittiohjeet
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
-
   //Itse kartta
   map = new google.maps.Map(document.getElementById('map'), {
   center: {
@@ -24,106 +26,8 @@ function initMap() {
   zoom: 4,
   disableDefaultUI: true,
 
-  //Tyyliseikkoja; värit yms
-  styles: [
-    {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-    {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-    {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-    {
-      featureType: 'administrative.locality',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#d59563'}]
-    },
-    {
-      featureType: 'poi',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#d59563'}]
-    },
-    {
-      featureType: 'poi.park',
-      elementType: 'geometry',
-      stylers: [{color: '#263c3f'}]
-    },
-    {
-      featureType: 'poi.park',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#6b9a76'}]
-    },
-    {
-      featureType: 'road',
-      elementType: 'geometry',
-      stylers: [{color: '#38414e'}]
-    },
-    {
-      featureType: 'road',
-      elementType: 'geometry.stroke',
-      stylers: [{color: '#212a37'}]
-    },
-    {
-      featureType: 'road',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#9ca5b3'}]
-    },
-    {
-      featureType: 'road.highway',
-      elementType: 'geometry',
-      stylers: [{color: '#746855'}]
-    },
-    {
-      featureType: 'road.highway',
-      elementType: 'geometry.stroke',
-      stylers: [{color: '#1f2835'}]
-    },
-    {
-      featureType: 'road.highway',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#f3d19c'}]
-    },
-    {
-      featureType: 'transit',
-      elementType: 'geometry',
-      stylers: [{color: '#2f3948'}]
-    },
-    {
-      featureType: 'transit.station',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#d59563'}]
-    },
-    {
-      featureType: 'water',
-      elementType: 'geometry',
-      stylers: [{color: '#ffffff'}]
-    },
-    {
-      featureType: 'water',
-      elementType: 'labels.text.fill',
-      stylers: [{color: '#515c6d'}]
-    },
-    {
-      featureType: 'water',
-      elementType: 'labels.text.stroke',
-      stylers: [{color: '#17263c'}]
-    },
-    {
-      featureType: "administrative",
-      elementType: "labels",
-      stylers: [
-        { visibility: "off" }
-      ]
-    },{
-      featureType: "poi",
-      elementType: "labels",
-      stylers: [
-        { visibility: "off" }
-      ]
-    },{
-      featureType: "road",
-      elementType: "labels",
-      stylers: [
-        { visibility: "off" }
-      ]
-    }
-  ]
+  //Ks. tyylit.js
+  styles: mapStyles
 	});
   
   //Tee kartasta staattinen
@@ -132,6 +36,8 @@ function initMap() {
   map.setOptions({scrollwheel: false});
 
   //zmap.disableScrollWheelZoom();
+  directionsDisplay.setMap(map);
+
   initService();
 }
 
@@ -175,8 +81,10 @@ function createMarker(place) {
 //Apufunktio kartan keskittämiseen
 function centerMap() {
   console.log("Center map");
-  if (map != null)
+  if (map != null) {
     map.panTo(new google.maps.LatLng(52.516667, 6.55));
+    map.setZoom(4);
+  }
 }
 
 //Kytke keskittäminen ikkunan koon muuttamiseen
@@ -186,18 +94,21 @@ window.addEventListener('resize', function(event){
 
 //Reitin hakeminen
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
-        directionsService.route({
-          origin: document.getElementById('start').value,
-          destination: document.getElementById('end').value,
-          travelMode: 'DRIVING'
-        }, function(response, status) {
-          if (status === 'OK') {
-            directionsDisplay.setDirections(response);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
-      }
+  directionsService.route({
+    origin: document.getElementById('start').value,
+    destination: document.getElementById('end').value,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      console.log("OK...");
+      directionsDisplay.setDirections(response);
+      centerMap();
+    } else {
+      window.alert('Directions request failed due to ' + status);
+      centerMap();
+    }
+  });
+}
 
 
 $(document).keydown(function(e) {
@@ -223,13 +134,15 @@ $(document).keydown(function(e) {
 
 function searchRoute() {
   //console.log("MOIKKA. PAINOIT JUURI ENTTERIÄ.");
+  clearMarkers();
   var fromField = document.getElementById("start").value;
   console.log(fromField);
   //Aseta lähtöpaikan sijainti
   codeAddress(fromField, true);
   var toField = document.getElementById("end").value;
   //Aseta määränpään sijainti
-  end = codeAddress(toField, false);
+  codeAddress(toField, false);
+  calculateAndDisplayRoute(directionsService, directionsDisplay);
 
 }
 
@@ -237,10 +150,11 @@ function showDistance() {
   if (start != null && end != null) {
     console.log("Search distance...");
     var currentDistance = google.maps.geometry.spherical.computeDistanceBetween(start, end) / 1000.0;
-    var fuel = currentDistance * 1.9 / 100;
+    var fuel = currentDistance * 1.9 / 100 / 0.85; // etäisyys * 1.9l/100km / 100km / 0.85 täyttöaste
     var co2 = fuel * 2.2;
     alert(Math.floor(10*fuel)/10 + "l bensaa " + Math.floor(currentDistance) + " km");
     alert("CO2-päästöjä: " + Math.floor(10*co2)/10+ " kg ("+ Math.floor(20*co2)/10+ "kg jos edestakainen matka)")
+    getComparison(co2);
 
   }
 }
@@ -256,11 +170,14 @@ function codeAddress(address, isStart) {
           map: map,
           position: point
       });
+      markers.push(marker);
       if (isStart)
         start = point;
       else 
         end = point;
+
       showDistance();
+      drawLine(start, end);
 
     } else {
       alert("Paikkaa '" + address + "' ei löytynyt.");
@@ -270,4 +187,29 @@ function codeAddress(address, isStart) {
         end = null;
    }
   });
+}
+
+function clearMarkers() {
+  for (x in markers){
+    markers[x].setMap(null);
+  }
+  markers = [];
+}
+
+//Piirrä lentoreitti kahden kaupungin välille
+function drawLine(p0, p1) {
+  //Poista edellinen reitti kartalta
+  if (line != null) line.setMap(null);
+  var flightPlanCoordinates = [ p0, p1 ];
+  //Luo polku
+  var flightPath = new google.maps.Polyline({
+    path: flightPlanCoordinates,
+    geodesic: true,
+    strokeColor: '#980000',
+    strokeOpacity: 0.75,
+    strokeWeight: 4
+  });
+  //Aseta polku kartalle ja muuttujaan
+  flightPath.setMap(map);
+  line = flightPath;
 }
