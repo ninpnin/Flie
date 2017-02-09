@@ -28,11 +28,11 @@ function round(num) {
 
 function flightFuel(length) {
 	var totalFuel = 0.0;
-	if (length < 100) {
-		totalFuel = length * 2 * planePerSeat / planeOccupancy;
+	if (length < 70) {
+		totalFuel = length * 1.5 * planePerSeat / planeOccupancy;
 	} else {
 		totalFuel = length * planePerSeat / planeOccupancy;
-		totalFuel += 100 * planePerSeat / planeOccupancy * 3;
+		totalFuel += 70 * planePerSeat / planeOccupancy * 3;
 	}
 	return totalFuel;
 }
@@ -41,4 +41,8 @@ function driveFuel(length) {
 	var totalFuel = 0.0;
 	totalFuel = length * carPerSeat / carOccupancy;
 	return totalFuel;
+}
+
+function anno(kg) {
+	return "(" + round(kg / annual * 100) + "%)";
 }

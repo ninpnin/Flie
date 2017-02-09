@@ -52,7 +52,7 @@ input[type=submit]:hover {
 #hakukentta2 {
     bottom: 5%;
     right: 3%;
-    width: 25%;
+    width: 30%;
     position: absolute;
     z-index: 1;
     visibility: hidden;

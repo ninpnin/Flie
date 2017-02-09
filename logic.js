@@ -205,8 +205,8 @@ function printResults() {
     var carFuel = driveFuel(drivenDistance);//drivenDistance * 6 / 100 / 1.58;
     var carCo2 = carFuel * 2.2;
 
-    document.getElementById("start2").innerHTML = "🛫 " + round(co2) + "kg";
-    document.getElementById("end2").innerHTML = "🚗 " + round(carCo2) + "kg";
+    document.getElementById("start2").innerHTML = "🛫 " + round(co2 * 2) + "kg " + anno(co2 * 2);
+    document.getElementById("end2").innerHTML = "🚗 " + round(carCo2 * 2) + "kg " + anno(carCo2 * 2);
 
 
 }
