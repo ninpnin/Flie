@@ -6,6 +6,7 @@
     	<meta name="viewport" content="initial-scale=1.0">
 	    <meta charset="utf-8">
 		<script type="text/javascript" src="jquery-3.1.1.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet">
 
 		<!-- Paikalliset tiedostot !-->
 		<script type="text/javascript" src="tyylit.js"></script>
@@ -14,7 +15,7 @@
 
 
 	</head>
-	
+
 	<body>
 
 		<div id="top">
@@ -22,6 +23,12 @@
 			    <input type="text" id="start" name="firstname" placeholder="L&Auml;HT&Ouml;PAIKKA" onkeypress="keyPressed(event, this);">
 			    <input type="text" id="end" name="lastname" placeholder="M&Auml;&Auml;R&Auml;NP&Auml;&Auml;" onkeypress="keyPressed(event, this);">
 			    <input type="submit" value="Etsi" onclick="searchRoute();">
+			</div>
+
+			<div id="hakukentta2">
+			    <div type="text" id="start2" name="firstname" placeholder="L&Auml;HT&Ouml;PAIKKA"></div>
+			    <div type="text" id="end2" name="lastname" placeholder="M&Auml;&Auml;R&Auml;NP&Auml;&Auml;"></div>
+			    <input id="hide" type="submit" value="Etsi">
 			</div>
 
 			<div id="map"></div>

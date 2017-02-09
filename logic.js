@@ -129,6 +129,10 @@ function getBothRoutes() {
   if (start != null & end != null) {
     drawLine(start, end);
     calculateAndDisplayRoute(directionsService, directionsDisplay);
+    document.getElementById("hakukentta2").style.visibility = "visible";
+
+  } else {
+    document.getElementById("hakukentta2").style.visibility = "hidden";
   }
 }
 
@@ -192,11 +196,17 @@ function printResults() {
     console.log("AERIAL DISTANCE: " + aerialDistance);
     console.log("DRIVEN DISTANCE: " + (drivenDistance));
 
-    var fuel = aerialDistance * 1.9 / 100 / 0.85; // etäisyys * 1.9l/100km / 100km / 0.85 täyttöaste
+    var fuel = flightFuel(aerialDistance); // etäisyys * 1.9l/100km / 100km / 0.85 täyttöaste
     var co2 = fuel * 2.2;
     console.log(Math.floor(10*fuel)/10 + "l bensaa " + Math.floor(aerialDistance) + " km");
     console.log("CO2-päästöjä: " + Math.floor(10*co2)/10+ " kg ("+ Math.floor(20*co2)/10+ "kg jos edestakainen matka)")
     getComparison(co2);
+
+    var carFuel = driveFuel(drivenDistance);//drivenDistance * 6 / 100 / 1.58;
+    var carCo2 = carFuel * 2.2;
+
+    document.getElementById("start2").innerHTML = "🛫 " + round(co2) + "kg";
+    document.getElementById("end2").innerHTML = "🚗 " + round(carCo2) + "kg";
 
 
 }
