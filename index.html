@@ -19,8 +19,8 @@
 
 		<div id="top">
 			<div id="hakukentta">
-			    <input type="text" id="start" name="firstname" placeholder="L&Auml;HT&Ouml;PAIKKA">
-			    <input type="text" id="end" name="lastname" placeholder="M&Auml;&Auml;R&Auml;NP&Auml;&Auml;">
+			    <input type="text" id="start" name="firstname" placeholder="L&Auml;HT&Ouml;PAIKKA" onkeypress="keyPressed(event, this);">
+			    <input type="text" id="end" name="lastname" placeholder="M&Auml;&Auml;R&Auml;NP&Auml;&Auml;" onkeypress="keyPressed(event, this);">
 			    <input type="submit" value="Etsi" onclick="searchRoute();">
 			</div>
 

@@ -11,7 +11,6 @@ var end = null;
 
 var markers = [];
 var line = null;
-
 //Alusta kartta yms
 function initMap() {
 
@@ -42,49 +41,31 @@ function initMap() {
 }
 
 function initService() {
-/*
-  infowindow = new google.maps.InfoWindow();
-  var service = new google.maps.places.PlacesService(map);
-  service.nearbySearch({
-    location: helsinki,
-    radius: 500,
-    type: ['store']
-  }, callback);
-*/
+  //Lisää objekti paikkojen hakemiseen kartalta
   geocoder = new google.maps.Geocoder();
   console.log("GEOCODER: " + geocoder);
 
 }
 
-function callback(results, status) {
-  if (status === google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
-    }
+function keyPressed(e) {
+  var event = e || window.event;
+  var charCode = event.which || event.keyCode;
+
+  if ( charCode == '13' ) {
+    // Enter pressed
+    searchRoute();
+    return false;
   }
 }
 
-function createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
-
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
-}
-
-
 //Apufunktio kartan keskittämiseen
 function centerMap() {
-  console.log("Center map");
+  //console.log("Center map");
   if (map != null) {
     map.panTo(new google.maps.LatLng(52.516667, 6.55));
     map.setZoom(4);
   }
+
 }
 
 //Kytke keskittäminen ikkunan koon muuttamiseen
@@ -109,28 +90,6 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     }
   });
 }
-
-
-$(document).keydown(function(e) {
-    switch(e.which) {
-        case 37: // left
-        break;
-
-        case 38: // up
-        break;
-
-        case 13: // enter
-          searchRoute();
-          break;
-
-        case 40: // down
-          console.log("MOIKKA. PAINOIT JUURI ALAS-NAPPULAA.");
-          break;
-
-        default: return; // exit this handler for other keys
-    }
-    e.preventDefault(); // prevent the default action (scroll / move caret)
-});
 
 function searchRoute() {
   //console.log("MOIKKA. PAINOIT JUURI ENTTERIÄ.");
