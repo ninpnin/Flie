@@ -5,14 +5,13 @@ var directionsService = null;
 var directionsDisplay = null;
 var berlin = null;
 
-var infowindow;
 var geocoder = null;
 
 var start = null;
 var end = null;
 
-var markers = [];
 var line = null;
+var route = null;
 
 //Globaalit muuttujat viimeisimmän reitin pituudelle
 var aerialDistance = null;
@@ -39,7 +38,6 @@ function initMap() {
   map.setOptions({keyboardShortcuts: false});
   map.setOptions({scrollwheel: false});
 
-  directionsDisplay.setMap(map);
   directionsDisplay.setOptions( { suppressMarkers: true } );
   initService();
 }
@@ -60,19 +58,18 @@ function centerMap() {
 //Kytke keskittäminen ikkunan koon muuttamiseen
 window.addEventListener('resize', function(event){ centerMap(); });
 
-
 /* Reitin hakeminen */
 //Tyhjennä reitti ja siihen liittyvät muuttujat uutta hakua varten
 function clearRoute() {
-  for (x in markers){
-    markers[x].setMap(null);
-  }
-  markers = [];
   //Tyhjennä muuttujat
   aerialDistance = null;
   drivenDistance = null;
   start = null;
   end = null;
+  if (line != null) line.setMap(null);
+  if (directionsDisplay != null) {
+    directionsDisplay.setMap(null);
+  }
 
 }
 
@@ -88,7 +85,6 @@ function searchRoute() {
   //Poista markkerit
   clearRoute();
   var fromField = document.getElementById("start").value;
-  console.log(fromField);
   //Aseta lähtöpaikan sijainti
   codeAddress(fromField, true);
   var toField = document.getElementById("end").value;
@@ -103,16 +99,10 @@ function codeAddress(address, isStart) {
     if (status == google.maps.GeocoderStatus.OK) {
       //place a marker at the location
       var point = results[0].geometry.location;
-      /*var marker = new google.maps.Marker({
-          map: map,
-          position: point
-      });
-      markers.push(marker);*/
       if (isStart)
         start = point;
       else 
         end = point;
-
       //Jos kumpikin paikka on haettu, jatka reittien hakemiseen
       getBothRoutes();
 
@@ -152,6 +142,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         routeDistance += response.routes[0].legs[x].distance.value / 1000;
       }
       drivenDistance = routeDistance;
+      directionsDisplay.setMap(map);
     } else {
       window.alert('Directions request failed due to ' + status);
       drivenDistance = null;
@@ -166,7 +157,6 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 //Piirrä lentoreitti kahden kaupungin välille
 function drawLine(p0, p1) {
   //Poista edellinen reitti kartalta
-  if (line != null) line.setMap(null);
   var flightPlanCoordinates = [ p0, p1 ];
   //Luo polku
   var flightPath = new google.maps.Polyline({
