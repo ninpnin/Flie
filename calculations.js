@@ -7,7 +7,7 @@ var planePerSeat = 1.9 / 100;
 var planeOccupancy = 0.82;
 
 var carPerSeat = 6 / (4 * 100);
-var carOccupancy = 1.58 / 4;
+var carOccupancy = 1;
 
 function getComparison(emissions) {
 	var kilosOfBeef = emissions / beefKg;
@@ -15,11 +15,13 @@ function getComparison(emissions) {
 	var iPhones = emissions / iPhone;
 	var annualPercentage = emissions / annual;
 
-	console.log("Vastaa " + round(kilosOfBeef) + " kiloa naudanlihaa.");
-	console.log("Vastaa " + round(kilosOfBananas) + " kiloa banaaneja.");
-	console.log("Vastaa " + round(iPhones) + " iPhonen tuottamista.");
-	console.log(round(annualPercentage * 100) + "% keskimääräistä vuosittaista päästöistä.");
+	var str1 = " " + round(kilosOfBeef) + " kiloa naudanlihaa.";
+	var str2 = " " + round(kilosOfBananas) + " kiloa banaaneja.";
+	var str3 = " " + round(iPhones) + " iPhonen tuottamista.";
+	var str4 = round(annualPercentage * 100) + "% keskimääräisistä vuosittaista päästöistä.";
+	var array = [str1, str2 , str3, str4];
 
+	return array;
 }
 
 function round(num) {
@@ -46,3 +48,9 @@ function driveFuel(length) {
 function anno(kg) {
 	return "(" + round(kg / annual * 100) + "%)";
 }
+
+function setCarOccupancy(passangers) {
+	carOccupancy = passangers / 4;
+}
+
+setCarOccupancy(1.58);

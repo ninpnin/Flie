@@ -26,9 +26,16 @@
 			</div>
 
 			<div id="hakukentta2">
-			    <div type="text" id="start2" name="firstname" placeholder="L&Auml;HT&Ouml;PAIKKA"></div>
-			    <div type="text" id="end2" name="lastname" placeholder="M&Auml;&Auml;R&Auml;NP&Auml;&Auml;"></div>
-			    <div type="text" id="end23" name="lastname"></div>
+			    <div id="start2" onclick="togglePlaneInfoVisibility();">
+			    	<div id="planeStats"></div>
+			    	<div id="planeInfo">planeInfo</div>
+			    </div>
+
+			    <div id="end2"  onclick="toggleCarInfoVisibility();">
+			    	<div id="carStats"></div>
+			    	<div id="carInfo">carInfo</div>
+			    </div>
+			    <div id="end23" name="lastname"></div>
 			</div>
 
 			<div id="map"></div>

@@ -40,6 +40,9 @@ function initMap() {
 
   directionsDisplay.setOptions( { suppressMarkers: true } );
   initService();
+  setCarInfoVisibility(false);
+  setPlaneInfoVisibility(false);
+
 }
 
 function initService() {
@@ -191,13 +194,63 @@ function printResults() {
     var co2 = fuel * 2.2;
     console.log(Math.floor(10*fuel)/10 + "l bensaa " + Math.floor(aerialDistance) + " km");
     console.log("CO2-päästöjä: " + Math.floor(10*co2)/10+ " kg ("+ Math.floor(20*co2)/10+ "kg jos edestakainen matka)")
-    getComparison(co2);
 
     var carFuel = driveFuel(drivenDistance);//drivenDistance * 6 / 100 / 1.58;
     var carCo2 = carFuel * 2.2;
 
-    document.getElementById("start2").innerHTML = " 🛫 " + round(co2 * 2) + "kg " + anno(co2 * 2);
-    document.getElementById("end2").innerHTML = " 🚗 " + round(carCo2 * 2) + "kg " + anno(carCo2 * 2);
+    var flightComparison = getComparison(co2 * 2);
+    document.getElementById("planeStats").innerHTML = " 🛫 " + round(co2 * 2) + "kg " + anno(co2 * 2);
+    document.getElementById("planeInfo").innerHTML = "Vastaa : <br>" + flightComparison[0] + "<br>"
+    + flightComparison[1] + "<br>"
+    + flightComparison[2] + "<br>"
+    + flightComparison[3] + "<br>";
+
+    var carComparison = getComparison(carCo2 * 2);
+    document.getElementById("carStats").innerHTML = " 🚗 " + round(carCo2 * 2) + "kg " + anno(carCo2 * 2);
+    document.getElementById("carInfo").innerHTML = "Vastaa : <br>" + carComparison[0] + "<br>"
+    + carComparison[1] + "<br>"
+    + carComparison[2] + "<br>"
+    + carComparison[3] + "<br>";
 
 
+
+}
+
+function setCarInfoVisibility(visible) {
+  var divOne = document.getElementById('carInfo');
+  if (visible) {
+    divOne.style.display = 'block';
+  } else {
+    divOne.style.display='none';
+  }
+}
+
+function toggleCarInfoVisibility() {
+  var divOne = document.getElementById("carInfo");
+  var visibility = divOne.style.display;
+  if (visibility != 'block') {
+    divOne.style.display = 'block';
+    console.log(divOne.style.display);
+  } else {
+    divOne.style.display = 'none';
+  }
+}
+
+function setPlaneInfoVisibility(visible) {
+  var divOne = document.getElementById('planeInfo');
+  if (visible)
+    divOne.style.display = 'block';
+  else
+    divOne.style.display='none';
+}
+
+function togglePlaneInfoVisibility() {
+  var divOne = document.getElementById("planeInfo");
+  var visibility = divOne.style.display;
+  if (visibility != 'block') {
+    divOne.style.display = 'block';
+    console.log(divOne.style.display);
+  } else {
+    divOne.style.display = 'none';
+  }
 }
