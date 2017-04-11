@@ -18,7 +18,7 @@ function getComparison(emissions) {
 	var str1 = " " + round(kilosOfBeef) + " kiloa naudanlihaa.";
 	var str2 = " " + round(kilosOfBananas) + " kiloa banaaneja.";
 	var str3 = " " + round(iPhones) + " iPhonen tuottamista.";
-	var str4 = round(annualPercentage * 100) + "% keskimääräisistä vuosittaista päästöistä.";
+	var str4 = round(annualPercentage * 100) + "% keskimääräisen suomalaisen vuosittaista päästöistä.";
 	var array = [str1, str2 , str3, str4];
 
 	return array;

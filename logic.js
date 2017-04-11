@@ -254,3 +254,35 @@ function togglePlaneInfoVisibility() {
     divOne.style.display = 'none';
   }
 }
+
+//Funktiot oikean alalaidan korttien "kääntämistä" varten; oletusnäkymässä info
+//ja toisessa näkymässä täyttöasteen säätäminen
+
+var planeDefault = true;
+var carDefault = true;
+
+function flipPlane() {
+	console.log("Plane card flipped");
+	planeDefault = !planeDefault;
+	console.log("info visible: " + planeDefault)
+
+	if (!planeDefault) {
+    	document.getElementById("planeInfo").innerHTML = " Tämä on laskettu moderneille lentokoneille, kuten uudelle A320:lle tai 737 MAX:lle Tähän matkustajamäärän muuttaminen. "
+	} else {
+		printResults();
+	}
+
+}
+
+function flipCar() {
+	console.log("Car card flipped,");
+	carDefault = !carDefault
+
+	if (!carDefault) {
+    	document.getElementById("carInfo").innerHTML = " Tämä on laskettu keskimääräiselle 2016 ostetulle autolle. Tähän matkustajamäärän muuttaminen. "
+	} else {
+		printResults();
+	}
+
+	console.log("info visible: " + carDefault)
+}
