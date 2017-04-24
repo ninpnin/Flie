@@ -41,7 +41,7 @@ input[type=submit]:hover {
     background-color: #45a049;
 }
 
-#hakukentta {
+#searchBox {
 	bottom: 5%;
 	left: 3%;
 	width: 25%;
@@ -49,7 +49,7 @@ input[type=submit]:hover {
 	z-index: 1;
 }
 
-#hakukentta2 {
+#resultBox {
     bottom: 0%;
     right: 3%;
     width: 30%;
@@ -68,7 +68,7 @@ input[type=submit]:hover {
     visibility: hidden;
 }
 
-#start2 {
+#planeResults {
     background-color: #45a049;
     border-top-left-radius: 6px; 
     border-top-right-radius: 5px; 
@@ -84,11 +84,11 @@ input[type=submit]:hover {
     font-size: 30pt;
 
 }
-#end2 {
+#carResults {
     background-color: rgb(50,90, 255);
 }
 
-#end23 {
+#resultBoxSkirt {
     background-color: rgb(50,90, 255);
     bottom: 5%;
 

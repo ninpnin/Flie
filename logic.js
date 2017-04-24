@@ -122,10 +122,10 @@ function getBothRoutes() {
   if (start != null & end != null) {
     drawLine(start, end);
     calculateAndDisplayRoute(directionsService, directionsDisplay);
-    document.getElementById("hakukentta2").style.visibility = "visible";
+    document.getElementById("resultBox").style.visibility = "visible";
 
   } else {
-    document.getElementById("hakukentta2").style.visibility = "hidden";
+    document.getElementById("resultBox").style.visibility = "hidden";
   }
 }
 
@@ -267,7 +267,15 @@ function flipPlane() {
 	console.log("info visible: " + planeDefault)
 
 	if (!planeDefault) {
-    	document.getElementById("planeInfo").innerHTML = " Tämä on laskettu moderneille lentokoneille, kuten uudelle A320:lle tai 737 MAX:lle Tähän matkustajamäärän muuttaminen. "
+      var newHtml = "<div> Tämä on laskettu moderneille lentokoneille, kuten uudelle A320:lle tai 737 MAX:lle</div>";
+      newHtml = newHtml +
+      "<select>" + 
+        "<option value='100'>100%</option>" +
+        "<option value='85'>85%</option>" +
+        "<option value='75'>75%</option>" +
+        "<option value='50'>50%</option>" +
+      "</select> ";
+    	document.getElementById("planeInfo").innerHTML = newHtml;
 	} else {
 		printResults();
 	}

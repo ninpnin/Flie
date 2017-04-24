@@ -13,29 +13,28 @@
 		<script type="text/javascript" src="logic.js"></script>
 		<script type="text/javascript" src="calculations.js"></script>
 
-
 	</head>
 
 	<body>
 
 		<div id="top">
-			<div id="hakukentta">
+			<div id="searchBox">
 			    <input type="text" id="start" name="firstname" placeholder="L&Auml;HT&Ouml;PAIKKA" onkeypress="keyPressed(event, this);">
 			    <input type="text" id="end" name="lastname" placeholder="M&Auml;&Auml;R&Auml;NP&Auml;&Auml;" onkeypress="keyPressed(event, this);">
 			    <input type="submit" value="Etsi" onclick="searchRoute();">
 			</div>
 
-			<div id="hakukentta2">
-			    <div id="start2" onclick="togglePlaneInfoVisibility();" oncontextmenu="flipPlane(); return false;">
+			<div id="resultBox">
+			    <div id="planeResults" onclick="togglePlaneInfoVisibility();" oncontextmenu="flipPlane(); return false;">
 			    	<div id="planeStats"></div>
 			    	<div id="planeInfo">planeInfo</div>
 			    </div>
 
-			    <div id="end2" onclick="toggleCarInfoVisibility();" oncontextmenu="flipCar(); return false;">
+			    <div id="carResults" onclick="toggleCarInfoVisibility();" oncontextmenu="flipCar(); return false;">
 			    	<div id="carStats"></div>
 			    	<div id="carInfo">carInfo</div>
 			    </div>
-			    <div id="end23" name="lastname"></div>
+			    <div id="resultBoxSkirt"></div>
 			</div>
 
 			<div id="map"></div>
