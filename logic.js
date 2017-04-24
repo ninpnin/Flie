@@ -21,6 +21,7 @@ var drivenDistance = null;
 /* Sivun ja kartan alustusta */
 //Alusta kartta yms
 function initMap() {
+
   //Reittiohjeet
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
@@ -48,7 +49,7 @@ function initMap() {
 function initService() {
   //Lisää objekti paikkojen hakemiseen kartalta
   geocoder = new google.maps.Geocoder();
-  console.log("GEOCODER: " + geocoder);
+  console.log("Geocoder: " + geocoder);
 }
 
 //Apufunktio kartan keskittämiseen
@@ -211,9 +212,6 @@ function printResults() {
     + carComparison[1] + "<br>"
     + carComparison[2] + "<br>"
     + carComparison[3] + "<br>";
-
-
-
 }
 
 function setCarInfoVisibility(visible) {
@@ -292,5 +290,5 @@ function flipCar() {
 		printResults();
 	}
 
-	console.log("info visible: " + carDefault)
+	console.log("Info visible: " + carDefault)
 }
