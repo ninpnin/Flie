@@ -269,7 +269,7 @@ function flipPlane() {
       newHtml = newHtml +
       "<select>" + 
         "<option value='100'>100%</option>" +
-        "<option value='85'>85%</option>" +
+        "<option value='85' selected='selected'>85%</option>" +
         "<option value='75'>75%</option>" +
         "<option value='50'>50%</option>" +
       "</select> ";
@@ -285,7 +285,16 @@ function flipCar() {
 	carDefault = !carDefault
 
 	if (!carDefault) {
-    	document.getElementById("carInfo").innerHTML = " Tämä on laskettu keskimääräiselle 2016 ostetulle autolle. Tähän matkustajamäärän muuttaminen. "
+    var newHtml = " Tämä on laskettu keskimääräiselle 2016 ostetulle autolle. Täyttöaste:";
+    newHtml = newHtml +
+    "<select id='carOccupancy' onchange='setCarPersons();'>" + 
+      "<option value='4'>4hlö</option>" +
+      "<option value='3'>3hlö</option>" +
+      "<option value='2'>2hlö</option>" +
+      "<option value='1.58' selected='selected'>1.58hlö (keskiarvo)</option>" +
+      "<option value='1'>1hlö</option>" +
+    "</select> ";
+  	document.getElementById("carInfo").innerHTML = newHtml;
 	} else {
 		printResults();
 	}

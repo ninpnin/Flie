@@ -40,6 +40,7 @@ function flightFuel(length) {
 }
 
 function driveFuel(length) {
+	console.log("Car occ " + carOccupancy);
 	var totalFuel = 0.0;
 	totalFuel = length * carPerSeat / carOccupancy;
 	return totalFuel;
@@ -49,8 +50,17 @@ function anno(kg) {
 	return "(" + round(kg / annual * 100) + "%)";
 }
 
-function setCarOccupancy(passangers) {
-	carOccupancy = passangers / 4;
+function setCarOccupancy(persons) {
+	carOccupancy = persons / 4;
 }
 
 setCarOccupancy(1.58);
+
+function setCarPersons() {
+	var element = document.getElementById("carOccupancy");
+	var persons = element.options[element.selectedIndex].value;
+	setCarOccupancy(persons);
+	//Vaihda näkyväksi
+	//toggleCarInfoVisibility();
+	printResults();
+}
