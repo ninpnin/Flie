@@ -148,7 +148,6 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
       drivenDistance = routeDistance;
       directionsDisplay.setMap(map);
     } else {
-      window.alert('Directions request failed due to ' + status);
       drivenDistance = null;
     }
     
@@ -212,6 +211,11 @@ function printResults() {
     + carComparison[1] + "<br>"
     + carComparison[2] + "<br>"
     + carComparison[3] + "<br>";
+
+    if (!carDefault)
+      carDefault = true;
+    if (!planeDefault)
+      planeDefault = true;
 }
 
 function setCarInfoVisibility(visible) {
@@ -260,7 +264,6 @@ var planeDefault = true;
 var carDefault = true;
 
 var planeOptionElement = null;
-
 function setPlaneOption() {
   var planeInfoElement = document.getElementById("planeInfo");
   if (planeOptionElement == null) { 
@@ -289,13 +292,11 @@ function flipPlane() {
 	} else {
 		printResults();
 	}
-
   console.log("info visible: " + planeDefault)
 
 }
 
 var carOptionElement = null;
-
 function setCarOption() {
   if (carOptionElement == null) { 
     var newHtml = "<div> Tämä on laskettu keskimääräiselle 2016 ostetulle autolle. Täyttöaste:";
@@ -324,6 +325,5 @@ function flipCar() {
 	} else {
 		printResults();
 	}
-
 	console.log("Info visible: " + carDefault)
 }
