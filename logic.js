@@ -259,33 +259,46 @@ function togglePlaneInfoVisibility() {
 var planeDefault = true;
 var carDefault = true;
 
+var planeOptionElement = null;
+
+function setPlaneOption() {
+  var planeInfoElement = document.getElementById("planeInfo");
+  if (planeOptionElement == null) { 
+    var newHtml = "<div>Tämä on laskettu moderneille lentokoneille, kuten uudelle A320:lle tai 737 MAX:lle";
+    newHtml = newHtml +
+    "<select id='planeOccupancy' onchange='setPlaneOccupancy();' >" + 
+      "<option value='1.0'>100%</option>" +
+      "<option value='0.85' selected='selected'>85%</option>" +
+      "<option value='0.75'>75%</option>" +
+      "<option value='0.50'>50%</option>" +
+    "</select></div>";
+    planeInfoElement.innerHTML = newHtml;
+    planeOptionElement = planeInfoElement.firstChild;
+  } else {
+    planeInfoElement.innerHTML = "";
+    planeInfoElement.appendChild(planeOptionElement);
+  }
+}
+
 function flipPlane() {
 	console.log("Plane card flipped");
 	planeDefault = !planeDefault;
-	console.log("info visible: " + planeDefault)
 
 	if (!planeDefault) {
-      var newHtml = "<div> Tämä on laskettu moderneille lentokoneille, kuten uudelle A320:lle tai 737 MAX:lle</div>";
-      newHtml = newHtml +
-      "<select>" + 
-        "<option value='100'>100%</option>" +
-        "<option value='85' selected='selected'>85%</option>" +
-        "<option value='75'>75%</option>" +
-        "<option value='50'>50%</option>" +
-      "</select> ";
-    	document.getElementById("planeInfo").innerHTML = newHtml;
+    setPlaneOption();
 	} else {
 		printResults();
 	}
 
+  console.log("info visible: " + planeDefault)
+
 }
 
-function flipCar() {
-	console.log("Car card flipped,");
-	carDefault = !carDefault
+var carOptionElement = null;
 
-	if (!carDefault) {
-    var newHtml = " Tämä on laskettu keskimääräiselle 2016 ostetulle autolle. Täyttöaste:";
+function setCarOption() {
+  if (carOptionElement == null) { 
+    var newHtml = "<div> Tämä on laskettu keskimääräiselle 2016 ostetulle autolle. Täyttöaste:";
     newHtml = newHtml +
     "<select id='carOccupancy' onchange='setCarPersons();'>" + 
       "<option value='4'>4hlö</option>" +
@@ -293,8 +306,21 @@ function flipCar() {
       "<option value='2'>2hlö</option>" +
       "<option value='1.58' selected='selected'>1.58hlö (keskiarvo)</option>" +
       "<option value='1'>1hlö</option>" +
-    "</select> ";
-  	document.getElementById("carInfo").innerHTML = newHtml;
+    "</select></div>";
+    document.getElementById("carInfo").innerHTML = newHtml;
+    carOptionElement = document.getElementById("carInfo").firstChild;
+  } else {
+    document.getElementById("carInfo").innerHTML = "";
+    document.getElementById("carInfo").appendChild(carOptionElement);
+  }
+}
+
+function flipCar() {
+	console.log("Car card flipped,");
+	carDefault = !carDefault
+
+	if (!carDefault) {
+    setCarOption()
 	} else {
 		printResults();
 	}

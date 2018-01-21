@@ -61,6 +61,18 @@ function setCarPersons() {
 	var persons = element.options[element.selectedIndex].value;
 	setCarOccupancy(persons);
 	//Vaihda näkyväksi
-	//toggleCarInfoVisibility();
+	toggleCarInfoVisibility();
 	printResults();
 }
+
+function setPlaneOccupancy(persons) {
+	var element = document.getElementById("planeOccupancy");
+	var occupacy = element.options[element.selectedIndex].value;
+	planeOccupancy = occupacy;
+	//Vaihda näkyväksi
+	toggleCarInfoVisibility();
+	printResults();
+	console.log("PLANE OCC " + planeOccupancy)
+
+}
+
